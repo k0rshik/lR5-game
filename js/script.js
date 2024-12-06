@@ -1,11 +1,14 @@
-let setAttribute;
+let start;
 let clicks;
 let difficulty;
-let yourHP;
-let enemyHP;
-let steps;
+let recursion;
 
-
+function reset() {
+    start = 0;
+    clicks = 0;
+    difficulty = 0;
+    recursion = 0;
+}
 
 function setNumberOfButtons(number) {
     if (isNaN(number) || isNaN(parseInt(number) || parseInt(number) < 0)) 
@@ -50,13 +53,7 @@ function setText(text) {
 function updateScene(path="") {
     switch (path) {
         case "":
-            start = 0;
-            clicks = 0;
-            difficulty = 0;
-            yourHP = 3;
-            enemyHP = 3;
-            steps = 0;
-
+            reset();
             setImage("start");
             setText('Чтобы начать игру, нужно нажать кнопку "Начать игру", которая начинает игру');
             setNumberOfButtons(1);
@@ -79,6 +76,7 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 1
         
         case "1":
             difficulty = 1;
@@ -102,6 +100,7 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 2
         
         case "11":
             setImage("11");
@@ -121,10 +120,11 @@ function updateScene(path="") {
             break;
 
         case "114_":
+            recursion++;
             setImage("114_");
             setText("Ваши глаза закрываются...");
             setNumberOfButtons(1);
-            setButton(1, "Продолжить", "2_");
+            setButton(1, "Продолжить", recursion < 2 ? "2" : "recursion");
             break;
 
         case "111":
@@ -141,17 +141,18 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 3
 
         case "1112":
             setImage("11");
-            setText("Вы закрыли за собой дверь... пока непонятно на что это повлияло");
+            setText("Вы закрыли за собой дверь");
             setNumberOfButtons(1);
             setButton(1, "Пройти на своё место", "115");
             break;
         
         case "112":
             setImage("11");
-            setText("Вы закрыли за собой дверь... пока непонятно на что это повлияло");
+            setText("Вы закрыли за собой дверь");
             setNumberOfButtons(2);
             setButton(1, "Поздороваться", "1121");
             setButton(2, "Пройти на своё место", "115");
@@ -222,6 +223,7 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 4
         
         case "115112":
             if (difficulty < 2){
@@ -247,6 +249,7 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 5
         
         case "115113":
             setImage("115113");
@@ -254,6 +257,7 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 6
         
         case "11512":
             setImage("115");
@@ -285,6 +289,7 @@ function updateScene(path="") {
             setText("Я забираю у вас все кнопки и картинку, вы их не заслужили... Подумайте над своим поведением");
             setNumberOfButtons(0);
             break;
+            // Концовка 7
         
         case "1152":
             setImage("115");
@@ -329,6 +334,7 @@ function updateScene(path="") {
             setText("Вы признались в использовании чата гпт и не можете защитить лабу. Это конец. Вы проиграли...");
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 8
         
         case "11522":
             setImage("115");
@@ -347,9 +353,10 @@ function updateScene(path="") {
         
         case "1152211":
             setImage("1152211");
-            setText("Вас не допустили к сдаче. Вы проиграли. Ваша семья разачарована в вас.");
+            setText("Вас не допустили к защите. Вы проиграли. Ваша семья разачарована в вас");
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 9
         
         case "115222":
             setImage("115");
@@ -371,21 +378,14 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 10
         
         
         case "2":
-            difficulty = 2;
+            if (difficulty!=1)
+                difficulty = 2;
             setImage("2");
             setText("Вы просыпаетесь от звуков любимого будильника и отключаете его");
-            setNumberOfButtons(3);
-            setButton(1, "Спать дальше", "21");
-            setButton(2, "Полежать 5 минут", "22");
-            setButton(3, "Встать с кровати", "23");
-            break;
-        
-        case "2_":
-            setImage("2");
-            setText("Оказалось, что это был сон... Вы просыпаетесь от звуков будильника и отключаете его");
             setNumberOfButtons(3);
             setButton(1, "Спать дальше", "21");
             setButton(2, "Полежать 5 минут", "22");
@@ -398,13 +398,15 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 11
 
         case "22":
             setImage("22");
-            setText("Вы решили полежать всего 5 минут... Через некоторое время вы просыпаетесь. Ваша комната выглядит такой... заброшенной. Вы смотрите в окно и видите огромные небоскрёбы и летающие машины. Сколько лет прошло? Кажется сдача лаб больше не является пробемой.");
+            setText("Вы решили полежать всего 5 минут... Через некоторое время вы просыпаетесь. Сколько лет прошло? Ваша комната выглядит такой... заброшенной. Вы смотрите в окно и видите огромные небоскрёбы и летающие машины. Кажется сдача лаб больше не является пробемой.");
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 12
         
         case "23":
             setImage("23");
@@ -429,6 +431,7 @@ function updateScene(path="") {
             setNumberOfButtons(1);
             setButton(1, "Начать заново", "");
             break;
+            // Концовка 13
         
         case "2331":
             setImage("2331");
@@ -458,6 +461,31 @@ function updateScene(path="") {
             setText("Вы сели на автобус и отправились в Федеральное государственное бюджетное образовательное учреждение высшего образования «Алтайский государственный технический университет имени Ивана Ивановича Ползунова»");
             setNumberOfButtons(1);
             setButton(1, "Продолжить", "1_");
+            break;
+        
+        case "recursion":
+            setImage("114_");
+            setText("Вы уже делали так и знаете, что это всего лишь сон...");
+            setNumberOfButtons(1);
+            setButton(1, "Продолжить", "recursion_");
+            break;
+
+        case "recursion_":
+            recursion = 0;
+            setImage("recursion_");
+            setText("Но в этот раз всё иначе...");
+            setButton(1, "Продолжить", "recursion__");
+            break;
+
+        case "recursion__":
+            
+            if (recursion < 9){
+                recursion++;
+                setImage("recursion"+recursion);
+            }
+            else
+                setImage("recursion");
+            setText("Но в этот раз всё иначе...");
             break;
         
         default:
