@@ -479,7 +479,7 @@ function updateScene(path="") {
 
         case "recursion__":
             
-            if (recursion < 9){
+            if (recursion < 8){
                 recursion++;
                 setImage("recursion"+recursion);
             }
@@ -487,6 +487,7 @@ function updateScene(path="") {
                 setImage("recursion");
             setText("Но в этот раз всё иначе...");
             break;
+            // Концовка 14
         
         default:
             setImage("error");
